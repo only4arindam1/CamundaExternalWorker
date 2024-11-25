@@ -1,0 +1,19 @@
+camunda.bpm.client:
+  base-url: http://localhost:8080/engine-rest # the URL pointing to the Camunda Platform Runtime REST API
+  lock-duration: 60000 # defines how many milliseconds the External Tasks are locked until they can be fetched again
+  async-response-timeout: 30000 # Defines the maximum duration of the long-polling request
+  subscriptions:
+    scoreProvider: # topic name of the External Service Task
+      variable-names: requestContext # our business logic doesn't require any variables, so don't fetch them
+      process-definition-key: twitter_qa # only filter for External Tasks with this process definition key
+    loanGranter:
+      variable-names: requestContext # only fetch these two variables
+      process-definition-key: twitter_qa
+logging.level.org.camunda.bpm.client: DEBUG # increase the log level of the application
+
+spring.datasource:
+  url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password: sa
+spring.h2.console.enabled: true
+
